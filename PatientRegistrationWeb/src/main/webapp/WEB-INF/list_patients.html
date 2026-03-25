@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lista Pacjentów</title>
+    <style>
+        table {
+            border: 1px solid black;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista Pacjentów</h1>
+    
+    <a href="index.html">Strona główna</a> | 
+    <a href="add_patient.html">Dodaj pacjenta</a>
+    
+    <hr>
+    
+    <p>Liczba pacjentów: <span id="count">0</span></p>
+    
+    <table id="patientsTable">
+        <thead>
+            <tr>
+                <th>LP</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Wiek</th>
+                <th>PESEL</th>
+                <th>Płeć</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Tu będą pacjenci -->
+        </tbody>
+    </table>
+    
+    <p id="noPatients" style="display:none;">Brak pacjentów w systemie.</p>
+    
+    <script>
+        // Przykładowi pacjenci
+        const patients = [
+            {name: "Jan", surname: "Kowalski", age: 30, pesel: "12345678901", gender: "M"},
+            {name: "Anna", surname: "Nowak", age: 25, pesel: "98765432109", gender: "K"}
+        ];
+        
+        // Załaduj dane po otwarciu strony
+        window.onload = function() {
+            const tableBody = document.querySelector('#patientsTable tbody');
+            const noPatients = document.getElementById('noPatients');
+            const count = document.getElementById('count');
+            
+            // Sprawdź czy są pacjenci w localStorage
+            const savedPatients = localStorage.getItem('patients');
+            let allPatients = patients;
+            
+            if (savedPatients) {
+                allPatients = [...patients, ...JSON.parse(savedPatients)];
+            }
+            
+            count.textContent = allPatients.length;
+            
+            if (allPatients.length === 0) {
+                noPatients.style.display = 'block';
+                return;
+            }
+            
+            // Dodaj każdego pacjenta do tabeli
+            allPatients.forEach((patient, index) => {
+                const row = tableBody.insertRow();
+                
+                const cell1 = row.insertCell(0);
+                const cell2 = row.insertCell(1);
+                const cell3 = row.insertCell(2);
+                const cell4 = row.insertCell(3);
+                const cell5 = row.insertCell(4);
+                const cell6 = row.insertCell(5);
+                
+                cell1.textContent = index + 1;
+                cell2.textContent = patient.name;
+                cell3.textContent = patient.surname;
+                cell4.textContent = patient.age + ' lat';
+                cell5.textContent = patient.pesel;
+                cell6.textContent = patient.gender === 'M' ? 'Mężczyzna' : 'Kobieta';
+            });
+        };
+    </script>
+</body>
+</html>

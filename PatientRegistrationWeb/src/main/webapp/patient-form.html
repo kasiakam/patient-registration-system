@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Add Patient</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; max-width: 600px; }
+    .form-group { margin: 15px 0; }
+    label { display: block; margin-bottom: 5px; font-weight: bold; }
+    input, select { width: 100%; padding: 8px; margin: 5px 0; }
+    .nav { margin: 20px 0; }
+    .error { color: red; margin: 10px 0; padding: 10px; background: #f8d7da; }
+  </style>
+</head>
+<body>
+
+<h1>Add New Patient</h1>
+
+<div class="nav">
+  <a href="history">Back to Patient List</a> |
+  <a href="compute">View Statistics</a>
+</div>
+
+<!-- Optional: show simple error codes (no JS) -->
+<!-- The server redirects with ?error=... -->
+<!-- You can manually read the parameter by server-side rendering, but this is pure HTML,
+     so we keep it as a simple placeholder instruction for the user. -->
+
+<form action="compute" method="post">
+  <input type="hidden" name="action" value="add">
+
+  <div class="form-group">
+    <label for="name">Name *</label>
+    <input type="text" id="name" name="name" required>
+  </div>
+
+  <div class="form-group">
+    <label for="surname">Surname *</label>
+    <input type="text" id="surname" name="surname" required>
+  </div>
+
+  <div class="form-group">
+    <label for="age">Age *</label>
+    <input type="number" id="age" name="age" min="1" max="130" required>
+  </div>
+
+  <div class="form-group">
+    <label for="pesel">PESEL *</label>
+    <input type="text" id="pesel" name="pesel" pattern="[0-9]{11}" maxlength="11" required>
+  </div>
+
+  <div class="form-group">
+    <label for="gender">Gender *</label>
+    <select id="gender" name="gender" required>
+      <option value="">Select gender</option>
+      <option value="M">Male</option>
+      <option value="K">Female</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <button type="submit">Save Patient</button>
+    <a href="history" style="margin-left: 10px;">Cancel</a>
+  </div>
+</form>
+
+</body>
+</html>
